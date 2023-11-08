@@ -1,0 +1,78 @@
+# Data Manager
+
+:triangular_flag_on_post: **Data Manager** application package.
+
+## Author
+
+**Kevin Doolaeghe**
+
+## Setup
+
+```
+docker compose -p datamanager up -d
+```
+
+:warning: This program require a docker instance to be executed.
+
+## Configuration
+
+* Sample `configuration.yaml` configuration file for `homeassistant` :
+ 
+```
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.X.0.X # Proxy IP address on Docker subnet 
+```
+
+* Sample `telegraf.conf` configuration file for `telegraf` :
+
+```
+[global_tags]
+
+[agent]
+  interval = "30s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = ""
+  omit_hostname = false
+
+[[outputs.influxdb]]
+  urls = ["http://influxdb:8086"]
+  database = "influxdb"
+  timeout = "5s"
+  username = "admin"
+  password = "admin"
+
+[[inputs.docker]]
+  endpoint = "unix:///var/run/docker.sock"
+  gather_services = false
+  container_names = []
+  source_tag = false
+  container_name_include = []
+  container_name_exclude = []
+  timeout = "5s"
+  perdevice = true
+  total = false
+  docker_label_include = []
+  docker_label_exclude = []
+  tag_env = ["JAVA_HOME", "HEAP_SIZE"]
+
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  collect_cpu_time = false
+  report_active = false
+
+[[inputs.disk]]
+  ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+
+[[inputs.mem]]
+
+[[inputs.processes]]
+```
