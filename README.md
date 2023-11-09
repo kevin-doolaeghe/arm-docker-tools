@@ -22,13 +22,40 @@ sudo apt-get upgrade -y
 sudo reboot
 ```
 
-### II. Execute commands as administrator without password
+### II. 
+
+1. Create and edit a configuration file named `10-wlan0.network` :
+
+```
+sudo nano /etc/systemd/network/10-wlan0.network
+```
+
+2. Add the configuration of the `wlan0` interface :
+
+```
+[Match]
+Name=wlan0
+
+[Network]
+Address=10.0.0.251/24
+Gateway=10.0.0.254
+DNS=10.0.0.254
+DHCP=no
+```
+
+3. Restart the `systemd-networkd` service :
+
+```
+sudo systemctl restart systemd-networkd.service
+```
+
+### III. Execute commands as administrator without password
 
 ```
 echo "kevin ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/010_kevin-nopasswd
 ```
 
-### III. Update the *MOTD*
+### IV. Update the *MOTD*
 
 1. Clear the `/etc/motd` file :
 
@@ -81,7 +108,7 @@ $(tput sgr0)"
 sudo chmod +x /etc/update-motd.d/20-sysinfo
 ```
 
-### IV. Setup Docker
+### V. Setup Docker
 
 1. Set up Docker's `apt` repository :
 
