@@ -19,10 +19,57 @@ docker compose -p datamanager up -d
 * Sample `configuration.yaml` configuration file for `homeassistant` :
  
 ```
+panel_iframe:
+  portainer:
+    title: "Portainer"
+    url: "https://portainer.kdoolaeghe.duckdns.org/#!/2/docker/dashboard"
+    icon: mdi:docker
+    require_admin: true
+  proxy:
+    title: "Proxy"
+    url: "https://proxy.kdoolaeghe.duckdns.org"
+    icon: mdi:arrow-decision
+    require_admin: true
+  dashy:
+    title: "Dashy"
+    url: "https://dashy.kdoolaeghe.duckdns.org"
+    icon: mdi:monitor-dashboard
+  grafana:
+    title: "Grafana"
+    url: "https://grafana.kdoolaeghe.duckdns.org"
+    icon: mdi:chart-line
+  plex:
+    title: "Plex"
+    url: "https://plex.kdoolaeghe.duckdns.org"
+    icon: mdi:plex
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
 http:
   use_x_forwarded_for: true
   trusted_proxies:
-    - 172.X.0.X # Proxy IP address on Docker subnet 
+    - 172.27.0.0/24
+
+influxdb:
+  api_version: 1
+  host: influxdb
+  port: 8086
+  database: influxdb
+  username: admin
+  password: admin
+  max_retries: 3
+  default_measurement: state
+  ssl: false
+  verify_ssl: false
 ```
 
 * Sample `telegraf.conf` configuration file for `telegraf` :

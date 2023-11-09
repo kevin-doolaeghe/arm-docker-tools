@@ -35,5 +35,5 @@ docker network connect <network> nginxproxymanager
 
 ## References
 
-* [Nginx Proxy Manager](https://nginxproxymanager.com/)
-* [Nginx Proxy Manager Tutorial (Youtube)](https://www.youtube.com/watch?v=qlcVx-k-02E&t=434s)
+* [Nginx Proxy Manager website](https://nginxproxymanager.com/)
+* [Nginx Proxy Manager tutorial (Youtube)](https://www.youtube.com/watch?v=qlcVx-k-02E&t=434s)

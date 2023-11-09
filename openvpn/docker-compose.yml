@@ -3,7 +3,7 @@ version: "3.8"
 services:
   openvpn:
     container_name: openvpn
-    image: kylemanna/openvpn
+    image: giggio/openvpn-arm
     restart: always
     cap_add:
       - NET_ADMIN

@@ -16,4 +16,4 @@ docker compose -p portainer up -d
 
 ## References
 
-* [Portainer](https://www.portainer.io/)
+* [Portainer website](https://www.portainer.io/)

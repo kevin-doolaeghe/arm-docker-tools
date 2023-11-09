@@ -15,5 +15,5 @@ docker compose -p duckdns up -d
 
 ## References
 
-* [Duck DNS](https://www.duckdns.org/)
-* [Docker Duck DNS - DDNS Service](https://hub.docker.com/r/linuxserver/duckdns)
+* [Duck DNS website](https://www.duckdns.org/)
+* [Duck DNS for Docker - DDNS service](https://hub.docker.com/r/linuxserver/duckdns)

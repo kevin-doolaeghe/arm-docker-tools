@@ -53,11 +53,13 @@ read usedMem totalMem usedMemPercent <<< `free | grep Mem | awk '{printf "%.2f %
 memory="${usedMemPercent}% used (${usedMem} MB / ${totalMem} MB)"
 # load average
 read load1m load5m load15m _ < /proc/loadavg
-loadAverage="'${load1m}%, ${load5m}%, ${load15m}% (1, 5, 15 min.)"
+loadAverage="${load1m}%, ${load5m}%, ${load15m}% (1, 5, 15 min.)"
 # running processes
 runningProcesses=`ps ax | wc -l | tr -d ' '`
 # network
-network=`hostname -I`
+eth0IpAddress=`ip addr show eth0 | grep 'inet ' | awk '{print $2}' | cut -f1 -d'/'`
+wlan0IpAddress=`ip addr show wlan0 | grep 'inet ' | awk '{print $2}' | cut -f1 -d'/'`
+network="eth0: $([[ ! -z "$eth0IpAddress" ]] && echo "$eth0IpAddress" || echo "none"), wlan0: $([[ ! -z "$wlan0IpAddress" ]] && echo "$wlan0IpAddress" || echo "none")"
 
 echo "$(tput setaf 2)
    .~~.   .~~.
@@ -114,4 +116,4 @@ sudo docker --version
 ## References
 
 * [Install Raspberry Pi OS](https://www.raspberrypi.com/software/)
-* [Install Docker on Debian](https://docs.docker.com/engine/install/debian/)
+* [Setup Docker on Debian](https://docs.docker.com/engine/install/debian/)

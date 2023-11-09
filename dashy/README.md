@@ -16,4 +16,4 @@ docker compose -p dashy up -d
 
 ## References
 
-* [Dashy](https://dashy.to/)
+* [Dashy website](https://dashy.to/)

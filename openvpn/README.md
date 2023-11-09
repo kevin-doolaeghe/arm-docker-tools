@@ -10,8 +10,8 @@
 
 1. Prepare environment :
 ```
-docker run -v openvpn_data:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://<domain-name>
-docker run -v openvpn_data:/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
+docker run -v openvpn_data:/etc/openvpn --rm giggio/openvpn-arm ovpn_genconfig -u udp://<domain-name>
+docker run -v openvpn_data:/etc/openvpn --rm -it giggio/openvpn-arm ovpn_initpki
 ```
 
 2. Setup `docker-compose` application :
@@ -26,16 +26,16 @@ ufw allow 1194/udp comment 'openvpn'
 
 4. Create a user :
 ```
-docker run -v openvpn_data:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full <user> nopass
+docker run -v openvpn_data:/etc/openvpn --rm -it giggio/openvpn-arm easyrsa build-client-full <user> nopass
 ```
 
 5. Generate the `.ovpn` certificate :
 ```
-docker run -v openvpn_data:/etc/openvpn --rm kylemanna/openvpn ovpn_getclient <user> > <user>.ovpn
+docker run -v openvpn_data:/etc/openvpn --rm giggio/openvpn-arm ovpn_getclient <user> > <user>.ovpn
 ```
 
 :warning: This program require a docker instance to be executed.
 
 ## References
 
-* [Docker OpenVPN Setup](https://xorhak.fr/mettre-en-place-rapidement-openvpn/)
+* [Setup OpenVPN for Docker](https://cj-hewett.medium.com/running-openvpn-server-with-docker-on-a-raspberry-pi-with-noip-39459dd9b625)
