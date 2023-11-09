@@ -10,28 +10,28 @@
 
 1. Prepare environment :
 ```
-docker run -v openvpn_data:/etc/openvpn --rm giggio/openvpn-arm ovpn_genconfig -u udp://<domain-name>
-docker run -v openvpn_data:/etc/openvpn --rm -it giggio/openvpn-arm ovpn_initpki
+sudo docker run -v openvpn_data:/etc/openvpn --rm giggio/openvpn-arm ovpn_genconfig -u udp://<domain-name>
+sudo docker run -v openvpn_data:/etc/openvpn --rm -it giggio/openvpn-arm ovpn_initpki
 ```
 
 2. Setup `docker-compose` application :
 ```
-docker compose -p openvpn up -d
+sudo docker compose -p openvpn up -d
 ```
 
 3. Setup firewall rules :
 ```
-ufw allow 1194/udp comment 'openvpn'
+sudo ufw allow 1194/udp comment 'openvpn'
 ```
 
 4. Create a user :
 ```
-docker run -v openvpn_data:/etc/openvpn --rm -it giggio/openvpn-arm easyrsa build-client-full <user> nopass
+sudo docker run -v openvpn_data:/etc/openvpn --rm -it giggio/openvpn-arm easyrsa build-client-full <user> nopass
 ```
 
 5. Generate the `.ovpn` certificate :
 ```
-docker run -v openvpn_data:/etc/openvpn --rm giggio/openvpn-arm ovpn_getclient <user> > <user>.ovpn
+sudo docker run -v openvpn_data:/etc/openvpn --rm giggio/openvpn-arm ovpn_getclient <user> > <user>.ovpn
 ```
 
 :warning: This program require a docker instance to be executed.
