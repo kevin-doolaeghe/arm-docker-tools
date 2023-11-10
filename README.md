@@ -37,7 +37,7 @@ sudo nano /etc/systemd/network/10-wlan0.network
 Name=wlan0
 
 [Network]
-Address=10.0.0.251/24
+Address=10.0.0.252/24
 Gateway=10.0.0.254
 DNS=10.0.0.254
 DHCP=no
