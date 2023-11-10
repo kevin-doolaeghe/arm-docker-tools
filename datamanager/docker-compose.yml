@@ -16,7 +16,7 @@ services:
       - local
   influxdb:
     container_name: influxdb
-    image: influxdb:1.8-alpine
+    image: influxdb:1.8
     restart: always
     environment:
       - INFLUXDB_DB=influxdb
