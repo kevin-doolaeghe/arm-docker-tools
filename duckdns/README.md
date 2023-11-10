@@ -8,10 +8,14 @@
 
 ## Setup
 ```
-docker compose -p duckdns up -d
+sudo docker compose -p duckdns up -d
 ```
 
 :warning: This program require a docker instance to be executed.
+
+## Configuration
+
+Change the settings in the `.env` file to configure the Duck DNS DDNS service.
 
 ## References
 

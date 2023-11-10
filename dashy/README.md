@@ -9,7 +9,7 @@
 ## Setup
 
 ```
-docker compose -p dashy up -d
+sudo docker compose -p dashy up -d
 ```
 
 :warning: This program require a docker instance to be executed.

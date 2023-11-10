@@ -9,7 +9,7 @@
 ## Setup
 
 ```
-docker compose -p nginxproxymanager up -d
+sudo docker compose -p nginxproxymanager up -d
 ```
 
 :warning: This program require a docker instance to be executed.
@@ -30,7 +30,7 @@ changeme
 
 To connect the proxy to the other containers, it must be attached to the corresponding networks using the following command :
 ```
-docker network connect <network> nginxproxymanager
+sudo docker network connect <network> nginxproxymanager
 ```
 
 ## References
