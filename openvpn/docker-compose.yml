@@ -8,7 +8,7 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - 1194:1194/udp
+      - 1194:1194
     volumes:
       - config:/etc/openvpn
     networks:
