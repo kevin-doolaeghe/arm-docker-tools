@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: homeassistant/home-assistant:latest
+    restart: always
+    privileged: true
+    environment:
+      - TZ=$TZ
+    devices:
+      - /dev/serial/by-id/usb-Nabu_Casa_SkyConnect_v1.0_0e9226d6be96ed11b33dc698a7669f5d-if00-port0:/dev/ttyUSB0
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - config:/config
+    networks:
+      - local
+
+volumes:
+  config:
+
+networks:
+  local:
