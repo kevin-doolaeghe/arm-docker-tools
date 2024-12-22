@@ -1,24 +1,18 @@
-version: "3.8"
-
 services:
   pihole:
     container_name: pihole
     image: pihole/pihole
     restart: always
     environment:
-      - TZ=$TZ
-      - WEBPASSWORD=$WEBPASSWORD
+      - TZ=$(cat /etc/timezone)
+      - WEBPASSWORD=changeme
     volumes:
-      - config:/etc/pihole
-      - dnsmasq:/etc/dnsmasq.d
+      - /mnt/data/pihole/config:/etc/pihole
+      - /mnt/data/pihole/dnsmasq:/etc/dnsmasq.d
     ports:
       - 53:53
     networks:
       - local
-
-volumes:
-  config:
-  dnsmasq:
 
 networks:
   local:

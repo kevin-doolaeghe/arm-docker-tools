@@ -14,6 +14,10 @@ docker-compose -p nodered up -d
 
 :warning: This program require a docker instance to be executed.
 
+## Web access
+
+Pi-Hole's web interface is accessible via port `1880`.
+
 ## References
 
 * [Node-RED](https://nodered.org)

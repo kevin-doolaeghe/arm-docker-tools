@@ -14,14 +14,10 @@ sudo docker compose -p datamanager up -d
 
 :warning: This program require a docker instance to be executed.
 
-## Default credentials for Grafana
+## Web access
 
-* Username :
-```
-admin
-```
+Grafana's web interface is accessible via port `3000`.
 
-* Password :
-```
-changeme
-```
+:key: Default credentials :
+* Username : `admin`
+* Password : `changeme`

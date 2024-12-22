@@ -14,15 +14,9 @@ docker-compose -p homeassistant up -d
 
 :warning: This program require a docker instance to be executed.
 
-## Configuration
+## Web access
 
-To access Home Assistant via a proxy, the `configuration.yaml` (located at `/var/lib/docker/volumes/homeassistant_config/_data`) file must include the following options :
-```
-http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 172.X.0.X # Proxy IP address on Docker subnet
-```
+Home Assistant's web interface is accessible via port `8123`.
 
 ## References
 

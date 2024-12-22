@@ -4,34 +4,26 @@
 
 ## Author
 
-**Kevin Doolaeghe**
+**Kevin DOOLAEGHE**
 
 ## Setup
 
-### I. Install and update the system
+### Download and install the system
 
-1. Burn the *Raspberry Pi OS 64bit (Lite)* image using *Raspberry Pi OS Imager* software. 
+Burn the *Raspberry Pi OS 64bit (Lite)* image using *Raspberry Pi Imager* software on your .
 
-:warning: Configure default Linux setting using the *Raspberry Pi OS Imager* software.
+:warning: Configure the default system settings (hostname, user, network, timezone, SSH and telemetry) using the `Ctrl+Shift+X` keyboard shortcut.
 
-2. Update and upgrade *Raspberry Pi OS* using the following commands :
+### Configure the network access
 
-```
-sudo apt-get update
-sudo apt-get upgrade -y
-sudo reboot
-```
-
-### II. 
+If this is not already done, configure the network access :
 
 1. Create and edit a configuration file named `10-wlan0.network` :
-
 ```
 sudo nano /etc/systemd/network/10-wlan0.network
 ```
 
 2. Add the configuration of the `wlan0` interface :
-
 ```
 [Match]
 Name=wlan0
@@ -44,27 +36,38 @@ DHCP=no
 ```
 
 3. Restart the `systemd-networkd` service :
-
 ```
 sudo systemctl restart systemd-networkd.service
 ```
 
-### III. Execute commands as administrator without password
+### Update the system
+
+Update and upgrade *Raspberry Pi OS* using the following commands :
+```
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo reboot
+```
+
+### Execute commands as administrator without password
 
 ```
 echo "kevin ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/010_kevin-nopasswd
 ```
 
-### IV. Update the *MOTD*
+### Update the *MOTD* banner
 
 1. Clear the `/etc/motd` file :
-
 ```
 cat /dev/null | sudo tee /etc/motd
 ```
 
-2. Create the `/etc/update-motd.d/20-sysinfo` file with the following content :
+2. Open the `/etc/update-motd.d/20-sysinfo` file :
+```
+sudo nano /etc/update-motd.d/20-sysinfo
+```
 
+3. Copy & paste the following content then save the file using `Ctrl+X` :
 ```
 #!/bin/bash
 
@@ -102,45 +105,62 @@ echo "$(tput setaf 2)
 $(tput sgr0)"
 ```
 
-3. Give execution permissions to the script :
-
+4. Give execution permissions to the script :
 ```
 sudo chmod +x /etc/update-motd.d/20-sysinfo
 ```
 
-### V. Setup Docker
+### Setup external storage
 
-1. Set up Docker's `apt` repository :
+1. Plug your USB drive to the Raspberry Pi.
 
+2. Find the name of your USB drive (e.g. `/dev/sda1`) using the following command :
 ```
-# Add Docker's official GPG key:
-sudo apt-get update
-sudo apt-get install ca-certificates curl gnupg
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-# Add the repository to Apt sources:
-echo \
-  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
+lsblk
 ```
 
-2. Install the latest version :
+3. Edit the `/etc/fstab` file :
+```
+sudo nano /etc/fstab
+```
 
+4. Add the USB drive entry and save the file to auto-mount the USB drive at startup :
 ```
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+/dev/sda1  /mnt/data  auto  defaults  0  0
 ```
+
+5. Create and initialize the mount directory :
+```
+sudo mkdir /mnt/data
+sudo chmod 777 /mnt/data
+```
+
+6. Check if the `fstab` entry is working :
+```
+sudo mount -a
+ls /mnt/data
+```
+
+### Setup Docker
+
+1. Install the latest version of `` :
+```
+curl -sSL https://get.docker.com | sh
+```
+
+2. Add the current user to the Docker group (avoids having to use the `docker` command with root privileges) :
+```
+sudo usermod -aG docker $USER
+```
+
+:warning: You need to reconnect for the instruction to take effect.
 
 3. Verify that the installation is successful :
-
 ```
-sudo docker --version
+docker --version
 ```
 
 ## References
 
-* [Install Raspberry Pi OS](https://www.raspberrypi.com/software/)
-* [Setup Docker on Debian](https://docs.docker.com/engine/install/debian/)
+* [Raspberry Pi OS website](https://www.raspberrypi.com/software/)
+* [Docker setup script](https://github.com/docker/docker-install)

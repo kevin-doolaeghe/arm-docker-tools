@@ -7,6 +7,7 @@
 **Kevin Doolaeghe**
 
 ## Setup
+
 ```
 sudo docker compose -p duckdns up -d
 ```

@@ -14,17 +14,13 @@ sudo docker compose -p nginxproxymanager up -d
 
 :warning: This program require a docker instance to be executed.
 
-## Default credentials
+## Web access
 
-* Email address :
-```
-admin@example.com
-```
+Nginx Proxy Manager's web interface is accessible via port `81`.
 
-* Password :
-```
-changeme
-```
+:key: Default credentials :
+* Email address : `admin@example.com`
+* Password : `changeme`
 
 ## Configuration
 

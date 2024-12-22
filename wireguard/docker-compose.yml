@@ -1,0 +1,24 @@
+services:
+  wireguard:
+    container_name: wireguard
+    image: ghcr.io/wg-easy/wg-easy
+    restart: always
+    environment:
+      - WG_HOST=$WG_HOST
+      - PASSWORD_HASH=$2a$12$1jrO4DM2jR1YuUvHbIsSNOZdDsMn4k0g0WsHeODxEQJXPjlug8qai
+      - ENABLE_PROMETHEUS_METRICS=true
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    ports:
+      - 51820:51820/udp
+    volumes:
+      - /mnt/data/wireguard/data:/etc/wireguard
+    networks:
+      - local
+
+networks:
+  local:

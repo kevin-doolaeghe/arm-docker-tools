@@ -14,6 +14,14 @@ docker-compose -p pihole up -d
 
 :warning: This program require a docker instance to be executed.
 
+## Web access
+
+Pi-Hole's web interface is accessible via port `80`.
+
+:key: Default credentials :
+* Email address : `admin`
+* Password : `changeme`
+
 ## References
 
 * [Pi-Hole](https://pi-hole.net/)
