@@ -18,26 +18,42 @@ Burn the *Raspberry Pi OS 64bit (Lite)* image using *Raspberry Pi Imager* softwa
 
 If this is not already done, configure the network access :
 
-1. Create and edit a configuration file named `10-wlan0.network` :
+1. Rename and edit the default `NetworkManager` configuration file named `preconfigured.nmconnection` :
 ```
-sudo nano /etc/systemd/network/10-wlan0.network
-```
-
-2. Add the configuration of the `wlan0` interface :
-```
-[Match]
-Name=wlan0
-
-[Network]
-Address=10.0.0.252/24
-Gateway=10.0.0.254
-DNS=10.0.0.254
-DHCP=no
+sudo mv /etc/NetworkManager/system-connections/preconfigured.nmconnection /etc/NetworkManager/system-connections/wlan0.nmconnection
+sudo nano /etc/NetworkManager/system-connections/wlan0.nmconnection
 ```
 
-3. Restart the `systemd-networkd` service :
+2. Update the configuration of the `wlan0` interface :
 ```
-sudo systemctl restart systemd-networkd.service
+[connection]
+id=wlan0
+uuid=<uuid>
+type=wifi
+
+[wifi]
+mode=infrastructure
+ssid=<ssid>
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=<psk>
+
+[ipv4]
+method=manual
+address1=10.0.0.252/24,10.0.0.254
+dns=10.0.0.254;8.8.8.8;
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+```
+
+3. Restart the `NetworkManager` service :
+```
+sudo systemctl restart NetworkManager
 ```
 
 ### Update the system
