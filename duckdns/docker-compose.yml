@@ -4,9 +4,9 @@ services:
     image: lscr.io/linuxserver/duckdns
     restart: always
     environment:
-      - TZ=$(cat /etc/timezone)
-      - SUBDOMAINS=$SUBDOMAINS
-      - TOKEN=$TOKEN
+      - TZ=${TZ} # cat /etc/timezone
+      - SUBDOMAINS=${SUBDOMAINS}
+      - TOKEN=${TOKEN}
       - LOG_FILE=false
     volumes:
       - /mnt/data/duckdns/config:/config

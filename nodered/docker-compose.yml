@@ -4,7 +4,7 @@ services:
     image: nodered/node-red:latest
     restart: always
     environment:
-      - TZ=$(cat /etc/timezone)
+      - TZ=${TZ} # cat /etc/timezone
     volumes:
       - /mnt/data/nodered/data:/data
     networks:

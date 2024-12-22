@@ -4,8 +4,8 @@ services:
     image: pihole/pihole
     restart: always
     environment:
-      - TZ=$(cat /etc/timezone)
-      - WEBPASSWORD=changeme
+      - TZ=${TZ} # cat /etc/timezone
+      - WEBPASSWORD=${WEBPASSWORD}
     volumes:
       - /mnt/data/pihole/config:/etc/pihole
       - /mnt/data/pihole/dnsmasq:/etc/dnsmasq.d

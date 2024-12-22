@@ -4,8 +4,8 @@ services:
     image: ghcr.io/wg-easy/wg-easy
     restart: always
     environment:
-      - WG_HOST=$WG_HOST
-      - PASSWORD_HASH=$2a$12$1jrO4DM2jR1YuUvHbIsSNOZdDsMn4k0g0WsHeODxEQJXPjlug8qai
+      - WG_HOST=${WG_HOST}
+      - PASSWORD_HASH=${PASSWORD_HASH} # docker run --rm -it ghcr.io/wg-easy/wg-easy wgpw 'changeme'
       - ENABLE_PROMETHEUS_METRICS=true
     cap_add:
       - NET_ADMIN

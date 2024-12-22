@@ -28,7 +28,7 @@ services:
     container_name: telegraf
     image: telegraf
     restart: always
-    user: telegraf:$(stat -c '%g' /var/run/docker.sock)
+    user: ${USER} # echo telegraf:$(stat -c '%g' /var/run/docker.sock)
     environment:
       - HOST_ETC=/hostfs/etc
       - HOST_PROC=/hostfs/proc
