@@ -1,7 +1,7 @@
 services:
   duplicati:
     container_name: duplicati
-    image: duplicati/duplicati
+    image: duplicati/duplicati:latest
     restart: always
     user: "${UID}:${GID}"
     environment:

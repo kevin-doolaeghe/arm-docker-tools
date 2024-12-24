@@ -1,7 +1,7 @@
 services:
   pihole:
     container_name: pihole
-    image: pihole/pihole
+    image: pihole/pihole:latest
     restart: always
     user: "${UID}:${GID}"
     environment:

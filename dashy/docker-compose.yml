@@ -1,7 +1,7 @@
 services:
   dashy:
     container_name: dashy
-    image: lissy93/dashy
+    image: lissy93/dashy:latest
     restart: always
     user: "${UID}:${GID}"
     volumes:
