@@ -3,15 +3,19 @@ services:
     container_name: duckdns
     image: lscr.io/linuxserver/duckdns
     restart: always
+    user: "${UID}:${GID}"
     environment:
       - TZ=${TZ} # cat /etc/timezone
       - SUBDOMAINS=${SUBDOMAINS}
       - TOKEN=${TOKEN}
       - LOG_FILE=false
     volumes:
-      - /mnt/data/duckdns/config:/config
+      - config:/config
     networks:
       - local
+
+volumes:
+  config:
 
 networks:
   local:

@@ -18,40 +18,35 @@ Burn the *Raspberry Pi OS 64bit (Lite)* image using *Raspberry Pi Imager* softwa
 
 If this is not already done, configure the network access :
 
-1. Rename and edit the default `NetworkManager` configuration file named `preconfigured.nmconnection` :
+1. Verify that the `NetworkManager` service is running :
+```
+sudo systemctl status NetworkManager
+```
+:memo: The default network manager is `NetworkManager` on Raspberry Pi OS.
+
+2. Rename and edit the default `NetworkManager` configuration file named `preconfigured.nmconnection` :
 ```
 sudo mv /etc/NetworkManager/system-connections/preconfigured.nmconnection /etc/NetworkManager/system-connections/wlan0.nmconnection
 sudo nano /etc/NetworkManager/system-connections/wlan0.nmconnection
 ```
 
-2. Update the configuration of the `wlan0` interface :
+3. Update the configuration of the `wlan0` interface :
+
+* Update the `id` of the interface :
 ```
 [connection]
 id=wlan0
-uuid=<uuid>
-type=wifi
+```
 
-[wifi]
-mode=infrastructure
-ssid=<ssid>
-
-[wifi-security]
-key-mgmt=wpa-psk
-psk=<psk>
-
+* Update the `ipv4` section to configure static network settings :
+```
 [ipv4]
 method=manual
 address1=10.0.0.252/24,10.0.0.254
 dns=10.0.0.254;8.8.8.8;
-
-[ipv6]
-addr-gen-mode=default
-method=auto
-
-[proxy]
 ```
 
-3. Restart the `NetworkManager` service :
+4. Restart the `NetworkManager` service :
 ```
 sudo systemctl restart NetworkManager
 ```
@@ -126,37 +121,6 @@ $(tput sgr0)"
 sudo chmod +x /etc/update-motd.d/20-sysinfo
 ```
 
-### Setup external storage
-
-1. Plug your USB drive to the Raspberry Pi.
-
-2. Find the name of your USB drive (e.g. `/dev/sda1`) using the following command :
-```
-lsblk
-```
-
-3. Edit the `/etc/fstab` file :
-```
-sudo nano /etc/fstab
-```
-
-4. Add the USB drive entry and save the file to auto-mount the USB drive at startup :
-```
-/dev/sda1  /mnt/data  auto  defaults  0  0
-```
-
-5. Create and initialize the mount directory :
-```
-sudo mkdir /mnt/data
-sudo chmod 777 /mnt/data
-```
-
-6. Check if the `fstab` entry is working :
-```
-sudo mount -a
-ls /mnt/data
-```
-
 ### Setup Docker
 
 1. Install the latest version of `` :
@@ -168,10 +132,16 @@ curl -sSL https://get.docker.com | sh
 ```
 sudo usermod -aG docker $USER
 ```
-
 :warning: You need to reconnect for the instruction to take effect.
 
-3. Verify that the installation is successful :
+3. Create a dedicated `docker` user and update its password :
+```
+sudo useradd -r -M -N -G docker docker
+sudo passwd docker
+```
+:memo: Note the `docker` user UID and `docker` group GID using the command `id docker`. 
+
+4. Verify that the installation is successful :
 ```
 docker --version
 ```

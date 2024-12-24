@@ -1,34 +1,36 @@
 services:
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:latest
     restart: always
+    user: "${UID}:${GID}"
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=changeme
       - GF_SECURITY_ALLOW_EMBEDDING=true
       - GF_INSTALL_PLUGINS=
     volumes:
-      - /mnt/data/grafana/data:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
     networks:
       - local
   influxdb:
     container_name: influxdb
     image: influxdb:1.8
     restart: always
+    user: "${UID}:${GID}"
     environment:
       - INFLUXDB_DB=influxdb
       - INFLUXDB_ADMIN_USER=admin
       - INFLUXDB_ADMIN_PASSWORD=admin
     volumes:
-      - /mnt/data/influxdb/data:/var/lib/influxdb
+      - influxdb_data:/var/lib/influxdb
     networks:
       - local
   telegraf:
     container_name: telegraf
-    image: telegraf
+    image: telegraf:latest
     restart: always
-    user: ${USER} # echo telegraf:$(stat -c '%g' /var/run/docker.sock)
+    user: "${UID}:${GID}"
     environment:
       - HOST_ETC=/hostfs/etc
       - HOST_PROC=/hostfs/proc
@@ -38,10 +40,15 @@ services:
       - HOST_MOUNT_PREFIX=/hostfs
     volumes:
       - /:/hostfs:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /mnt/data/telegraf/config:/etc/telegraf
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - telegraf_config:/etc/telegraf
     networks:
       - local
+
+volumes:
+  grafana_data:
+  influxdb_data:
+  telegraf_config:
 
 networks:
   local:

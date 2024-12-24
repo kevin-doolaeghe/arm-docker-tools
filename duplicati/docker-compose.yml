@@ -1,0 +1,19 @@
+services:
+  duplicati:
+    container_name: duplicati
+    image: duplicati/duplicati
+    restart: always
+    user: "${UID}:${GID}"
+    environment:
+      - SETTINGS_ENCRYPTION_KEY=${SETTINGS_ENCRYPTION_KEY}
+      - DUPLICATI__WEBSERVICE_PASSWORD=${DUPLICATI__WEBSERVICE_PASSWORD}
+    volumes:
+      - data:/data
+    networks:
+      - local
+
+volumes:
+  data:
+
+networks:
+  local:

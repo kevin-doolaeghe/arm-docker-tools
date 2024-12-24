@@ -3,6 +3,7 @@ services:
     container_name: wireguard
     image: ghcr.io/wg-easy/wg-easy
     restart: always
+    user: "${UID}:${GID}"
     environment:
       - WG_HOST=${WG_HOST}
       - PASSWORD_HASH=${PASSWORD_HASH} # docker run --rm -it ghcr.io/wg-easy/wg-easy wgpw 'changeme'
@@ -14,11 +15,14 @@ services:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
     ports:
-      - 51820:51820/udp
+      - "51820:51820/udp"
     volumes:
-      - /mnt/data/wireguard/data:/etc/wireguard
+      - data:/etc/wireguard
     networks:
       - local
+
+volumes:
+  data:
 
 networks:
   local:

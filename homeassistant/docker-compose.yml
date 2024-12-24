@@ -3,6 +3,7 @@ services:
     container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:stable
     restart: always
+    user: "${UID}:${GID}"
     privileged: true
     environment:
       - TZ=${TZ} # cat /etc/timezone

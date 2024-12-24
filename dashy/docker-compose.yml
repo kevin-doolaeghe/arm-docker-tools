@@ -3,10 +3,14 @@ services:
     container_name: dashy
     image: lissy93/dashy
     restart: always
+    user: "${UID}:${GID}"
     volumes:
-      - /mnt/data/dashy/config:/app/public
+      - config:/app/public
     networks:
       - local
+
+volumes:
+  config:
 
 networks:
   local:

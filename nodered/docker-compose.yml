@@ -3,12 +3,16 @@ services:
     container_name: nodered
     image: nodered/node-red:latest
     restart: always
+    user: "${UID}:${GID}"
     environment:
       - TZ=${TZ} # cat /etc/timezone
     volumes:
-      - /mnt/data/nodered/data:/data
+      - data:/data
     networks:
       - local
+
+volumes:
+  data:
 
 networks:
   local:

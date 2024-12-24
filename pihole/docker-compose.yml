@@ -3,6 +3,7 @@ services:
     container_name: pihole
     image: pihole/pihole
     restart: always
+    user: "${UID}:${GID}"
     environment:
       - TZ=${TZ} # cat /etc/timezone
       - WEBPASSWORD=${WEBPASSWORD}
@@ -10,7 +11,7 @@ services:
       - /mnt/data/pihole/config:/etc/pihole
       - /mnt/data/pihole/dnsmasq:/etc/dnsmasq.d
     ports:
-      - 53:53
+      - "53:53/tcp"
     networks:
       - local
 
